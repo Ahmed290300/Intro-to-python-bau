@@ -1,0 +1,55 @@
+import pyperclip
+
+def caesar_cipher(text, key, mode):
+    result = ''
+    if mode == 'd':
+        key = -key  # For decryption, use the inverse of the key
+    for char in text:
+        if char.isalpha():
+            shifted = ord(char) + key
+            if char.islower():
+                if shifted > ord('z'):
+                    shifted -= 26
+                elif shifted < ord('a'):
+                    shifted += 26
+            elif char.isupper():
+                if shifted > ord('Z'):
+                    shifted -= 26
+                elif shifted < ord('A'):
+                    shifted += 26
+            result += chr(shifted)
+        else:
+            result += char
+    return result
+
+def main():
+    while True:
+        choice = input("Do you want to (e)ncrypt or (d)ecrypt?> ").lower()
+        if choice not in ['e', 'd']:
+            print("Please enter 'e' for encrypt or 'd' for decrypt.")
+            continue
+        
+        try:
+            key = int(input("Please enter the key (0 to 25) to use.> "))
+            if not 0 <= key <= 25:
+                print("Key must be between 0 and 25.")
+                continue
+        except ValueError:
+            print("Please enter a valid integer key.")
+            continue
+        
+        message = input("Enter the message to {}: ".format("encrypt" if choice == 'e' else "decrypt"))
+        
+        if choice == 'e':
+            encrypted_text = caesar_cipher(message, key, 'e')
+            pyperclip.copy(encrypted_text)
+            print("Full encrypted text copied to clipboard.")
+        else:
+            decrypted_text = caesar_cipher(message, key, 'd')
+            pyperclip.copy(decrypted_text)
+            print("Full decrypted text copied to clipboard.")
+        
+        break
+
+if __name__ == "__main__":
+    main()
