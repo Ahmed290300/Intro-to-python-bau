@@ -1,0 +1,57 @@
+class Question:
+    def __init__(self, question, answer1, answer2, answer3, answer4, correct_answer):
+        self.question = question
+        self.answer1 = answer1
+        self.answer2 = answer2
+        self.answer3 = answer3
+        self.answer4 = answer4
+        self.correct_answer = correct_answer
+
+    def display_question(self):
+        print(self.question)
+        print("1. ", self.answer1)
+        print("2. ", self.answer2)
+        print("3. ", self.answer3)
+        print("4. ", self.answer4)
+
+    def check_answer(self, player_answer):
+        return player_answer == self.correct_answer
+
+
+def main():
+    # Creating a list of Question objects
+    questions = [
+        Question("What is the capital of France?", "Paris", "London", "Berlin", "Rome", 1),
+        Question("Which planet is known as the Red Planet?", "Mars", "Venus", "Jupiter", "Saturn", 1),
+        # Add more questions here...
+    ]
+
+    player1_points = 0
+    player2_points = 0
+
+    for i in range(5):  # Each player answers 5 questions
+        print("Player 1's Turn:")
+        questions[i].display_question()
+        player1_answer = int(input("Enter your answer (1-4): "))
+        if questions[i].check_answer(player1_answer):
+            player1_points += 1
+
+        print("\nPlayer 2's Turn:")
+        questions[i + 5].display_question()
+        player2_answer = int(input("Enter your answer (1-4): "))
+        if questions[i + 5].check_answer(player2_answer):
+            player2_points += 1
+
+    print("\nPlayer 1's points:", player1_points)
+    print("Player 2's points:", player2_points)
+
+    if player1_points > player2_points:
+        print("Player 1 wins!")
+    elif player2_points > player1_points:
+        print("Player 2 wins!")
+    else:
+        print("It's a tie!")
+
+
+if __name__ == "__main__":
+    main()
